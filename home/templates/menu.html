@@ -1,0 +1,202 @@
+{%extends 'header.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{%block a%}MarksUp{%endblock%}</title>
+    
+    {%block link%}
+    <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{%static 'css/menu.css'%}">
+    {%endblock%}
+
+    {%block s%}
+    <script src="{% static 'js/swiper.min.js' %}"></script>
+    <script src="{% static 'js/menu.js' %}"></script>
+    {%endblock%}
+</head>
+<body>
+{%block b%}
+
+<div class="container-fluid" id="section">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card mb-3">
+                <div class="card-header">Latest Jobs</div>
+                <div class="card-body">
+                {% for job in latestjobs|slice:"10" %}
+                <ul>
+                    <li>
+                        <a style='color:dimgray;' href={% url 'home:data' job %}>{{job}}</a>
+                        {% if forloop.counter <= 3%}<span class="blink">new</span>{% endif %}
+                    </li>
+                </ul>
+                {% endfor %}
+                <div align='right'>
+                    <a name='jobcontent' href={% url 'home:allcontent' 'job' %}>view more <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-sm-4">
+            <div class="card mb-3">
+                <div class="card-header">Admit Cards</div>
+                <div class="card-body">
+                {% for a in admitcard|slice:"10" %}
+                    <ul>
+                    <li>
+                        {% for link in a|slice:"1:2" %}
+                            <a style="color:dimgray;" href={% url 'home:data' link %}>
+                        {% endfor %}
+
+                        {% for link in a|slice:"1" %}{{link}}{% endfor %}</a>
+                        {% if forloop.counter <= 3%}<span class="blink">new</span>{% endif %}
+                    </li>
+                </ul>
+                {% endfor %}
+                <div align='right'>
+                    <a href={% url 'home:allcontent' 'admitcard' %}>view more <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="card mb-3">
+                <div class="card-header">Results</div>
+                <div class="card-body">
+                    {% for a in result|slice:"10" %}
+                        <ul>
+                        <li>
+                            {% for link in a|slice:"1:2" %}
+                                <a style="color:dimgray;" href={% url "home:data" link %}>
+                            {% endfor %}
+
+                            {% for link in a|slice:"1" %}{{link}}{% endfor %}</a>
+                            {% if forloop.counter <= 3%}<span class="blink">new</span>{% endif %}
+                        </li>
+                    </ul>
+                    {% endfor %}
+                <div align='right'><a href={% url 'home:allcontent' 'result' %}>view more <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                </a></div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
+
+<div class="container-fluid">
+    <h3 id="selectionhead">Select Your Exam</h3>
+    <div id="myBtnContainer">
+        {%for category,value in context.items %}
+        <button id="btn" onclick="filterSelection('{{category}}')">{{category}}</button>
+        {% endfor %}
+    </div>
+      
+    <div class="container" id='container'>
+        {% for category,value in context.items %}
+        {% for sub,job in value.items %}
+        {% for j in job %}
+        <a href="{% url 'home:data' j %}">
+            <button class="filterbtn m-1 {{category}}">
+                {{j}}
+            </button>
+        </a>
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+    </div>
+
+</div>
+<div class="container-fluid" id="container2">
+        <h3 class="font-weight-bold text-center" style="color:coral;">Why MarksUp?</h3>
+        <h5 class="text-center" style="color:lightcoral;">Prepare better with comprehensive Mock Tests</h5>
+        <img src="{% static 'images/why.png' %}" style="width:100%;">          
+    </div>
+</div>
+
+<div class="container-fluid"><!--Testimonial container-->
+	<div class="row">
+		<div class="col col-center m-auto">
+            <h1 id="testimonials">testimonials</h1>
+			  <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="imgBx"><img src={ % static "images/user.png" %}></div>
+                        <p> lorem is dfjsd  asdf jja dfa dfjadf a jsd fajdfj ajdfjal fjadk fajdf a dfjjadfk
+                        </p>
+                        <div class="details"><h4>jogn dow<br><span>web designer</span></h4></div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="imgBx"><img src={% static 'images/user.png' %}></div>
+                        <p> lorem is dfjsd  asdf jja dfja dfjadf a jsd fajdfj ajdfjal ajdsfk jajdfja
+                        fjdsaj sfkjad ajsdfjad fjadkfajdf a dfjjadfk lorem is dfjsd  aad fjadk fajdf a dfjjadfk
+                        </p>
+                        <div class="details"><h4>jogn dow<br><span>web designer</span></h4></div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="imgBx"><img src={% static 'images/user.png' %}></div>
+                        <p> lorem is dfjsd  asdf jja dfja dfjadf a jsd fajdfja jdfjal ajsdfjad fjad kfajdf a dfjjadfk
+                        </p>
+                        <div class="details"><h4>jogn dow<br><span>web designer</span></h4></div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="imgBx"><img src={% static 'images/user.png' %}></div>
+                        <p> lorem is dfjsd  asdf jja dfja dfjadf a jsd fajdfj ajdfjal fjad fjadk fajdf a dfjjadfk
+                        </p>
+                        <div class="details"><h4>jogn dow<br><span>web designer</span></h4></div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- Initialize Swiper -->
+            <script>
+                var swiper = new Swiper('.swiper-container', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: {
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 300,
+                    modifier: 3,
+                    slideShadows : true,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                });
+            </script>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid" id="footer" style="background:white;">
+    <div class="row">
+        <div class="col">
+            <img src="{% static 'images/marksup-Footer.png' %}" style="width:100%;">
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col">
+            <strong style="color:#ccc;font-size: xx-large;">Follow-Us On</strong>
+            <a href="https://facebook.com"><img src="{% static 'images/Facebook.png' %}"></a>
+            <a href="https://twitter.com"><img src="{% static 'images/Twitter.png' %}"></a>
+            <a href="https://instagram.com"><img src="{% static 'images/Instagram.png' %}"></a>
+            <a href="https://youtube.com"><img src="{% static 'images/Youtube.png' %}"></a>
+            <a href="https://linkedin.com"><img src="{% static 'images/LinkedIn.png' %}"></a>
+        </div>
+    </div>   
+</div>
+{%endblock%}
+</body>
+</html>

@@ -1,0 +1,53 @@
+{%extends 'header.html'%}
+<!DOCTYPE html>
+<html>
+<head>
+  {% load staticfiles %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%block a %}login form{% endblock %}
+  {%block link%}<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">{%endblock%}
+</head>
+<body>
+{% block b %}
+<div class="container"><br><br>
+    <div class="form-group col-sm-6">
+        {% if messages%}
+        <ul class="messages">
+        {% for msg in messages %}
+          <li class="alert alert-danger">{{msg}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+    <img src="{% static 'images/user.png' %}" hspace='400px' vspace='180px'>
+  <div class="loginBox">
+    <img src="{% static 'images/user.png' %}" class="user">
+    <h2>Log In Here</h2>
+
+  <div class="col-sm-7">
+    <form method="post" action="" class="form-horizontal">
+      {% csrf_token %}
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Username</label>
+        <div class="col-sm-5">
+          <input type='text' name='user' class='form-control input' placeholder='username'>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-5">
+          <input type='password' name='pas' class='form-control input' placeholder='*****'>
+        </div>
+      </div>
+
+      <a href="#">Forget Password</a>
+      <div class="col-md-offset-3">
+        <button type="submit" >Sign In</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

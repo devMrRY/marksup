@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% extends 'header.html' %} {% load static %}
+    <title>{% block a %}About Us{% endblock %}</title>
+    {% block link %}
+    <style>
+      #footer a img {
+        padding: 25px;
+      }
+      #footer a img:hover {
+        box-shadow: #ccc solid;
+      }
+      h5 {
+        color: lightcoral;
+        font-weight: bold;
+        font-size: x-large;
+      }
+      content {
+        margin-bottom: 10px;
+        color: darkgrey;
+      }
+      #vision {
+        background: white;
+        border-right: #ccc solid;
+        margin-top: 15xp;
+        margin-bottom: 10px;
+      }
+    </style>
+    {% endblock %}
+  </head>
+  <body>
+    {% block b %}
+    <div class="container" style="margin-top:55px;" align="center">
+      <img
+        src="{%static 'images/selling-scrap-online.png'%}"
+        style="width: 100%;"
+      /><br />
+      <h2 class="font-weight-bold">About Us</h2>
+      <br />
+      <blockquote>
+        MarksUp is India's largest exam preparation destination, loved by
+        millions of aspirants across the country. Through our website and app,
+        we help more than 1.1 crore registered students to prepare actively for
+        various exams & score better.<br /><br />
+
+        At our heart lies the belief that people prepare better when they
+        prepare together; by questioning, helping & challenging each other.
+        Hence at the very core of our being lies a community of students &
+        expert mentors. Established in the year 2019, we have established &
+        nurtured highly engaging exam-specific communities of students and
+        mentors for SSC, Banking, Railways, Teaching, JEE, GATE, NEET, UPSC,
+        Defense and State level exams. The Gradeup community lets users
+        collectively solve each other’s doubts, and interactively learn and
+        compete with each other through quizzes and mock tests. It gives them
+        access to prep material & previous years papers to score better in their
+        exams.<br /><br />
+
+        We also appreciate the value of structured preparation, not just the
+        quantity of it but also the approach. It is only by preparing actively
+        everyday & making small but significant headways can one ensure
+        continuous improvement.
+      </blockquote>
+    </div>
+    <div align="center">
+      <div
+        class="row"
+        style="padding:25px;width:90%;background:linear-gradient(to bottom right, black, transparent);"
+      >
+        <div class="col text-center" id="vision">
+          <h5>Vision</h5>
+          <content>
+            We aspire to be India’s largest and most comprehensive online
+            preparation destination for competitive exams.</content
+          >
+        </div>
+        <div class="col text-center" id="vision">
+          <h5>Mission</h5>
+          <content
+            >We believe that these exams can make a huge impact in a student's
+            life. We help them prepare actively for these exams & score
+            better.</content
+          >
+        </div>
+        <div class="col text-center" id="vision">
+          <h5>Core Belief</h5>
+          <content
+            >We believe that collaboration is the future of learning and have
+            thus brought together students & community experts from across the
+            country.</content
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid" id="footer" style="background:white;">
+      <div class="row">
+        <div class="col">
+          <img
+            src="{% static 'images/marksup-Footer.png' %}"
+            style="width:100%;"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <strong style="color:#ccc;font-size: xx-large;">Follow-Us On</strong>
+          <a href="https://facebook.com"
+            ><img src="{% static 'images/Facebook.png' %}"
+          /></a>
+          <a href="https://twitter.com"
+            ><img src="{% static 'images/Twitter.png' %}"
+          /></a>
+          <a href="https://instagram.com"
+            ><img src="{% static 'images/Instagram.png' %}"
+          /></a>
+          <a href="https://youtube.com"
+            ><img src="{% static 'images/Youtube.png' %}"
+          /></a>
+          <a href="https://linkedin.com"
+            ><img src="{% static 'images/LinkedIn.png' %}"
+          /></a>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </body>
+</html>

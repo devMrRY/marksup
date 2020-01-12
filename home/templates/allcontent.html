@@ -1,0 +1,84 @@
+{% extends 'header.html' %}
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" initial-scale=1>
+    {% block a%}gradein {{head}}{% endblock %}
+    {% block link %}
+    <style>
+    .col-sm-5{
+        border: black solid;
+        border-width: 0.1px;
+    }
+    #heading{
+        text-align: center;
+        font-weight: bold;
+        background: #ab183d;
+        padding:5px;
+        color: white;
+        font-size: 35px;
+    }
+    .col-sm-5 a{
+        color: black;
+        font-size: 15px;
+        padding: 5px;
+        font-family: Verdana;
+    }
+    .col-sm-5 a:hover{
+        color: darkblue;
+    }
+    .container-fluid{
+        float:left;margin-top:46px;padding: 0px;
+    }
+    .m-2{
+        width:100%;height:150px;background: #ab183d;
+    }
+    strong{
+        color: red;
+        font-weight: 100;
+    }
+    </style>
+    {%endblock%}
+</head>
+<body>
+    {% block b%}
+    <div class="container-fluid">
+        <div class="row m-2">
+            <div class="col-sm-1">
+                <a href="/home/"><img style="height:100px;margin-top: 20px;" src="{% static 'images/logo.png' %}"></a>
+            </div>
+            <div class="col" style="text-align: center;color: whitesmoke; font-size: 100px;font-family:cursive;">
+                <p>MarksUp</p>
+            </div>
+        </div>
+        <div style="padding:20px;">
+        <div class="row-sm-5" >
+            <div class="col-sm-5" id="heading">{{head}}</div>
+        </div>
+        
+        <div class="row-sm-5">
+            <div class="col-sm-5">
+                {% for j in content %}
+                <ul><li>
+                {% if head == 'Latest Jobs' %}
+                
+                {% for a in j|slice:"1" %}<a href='{% url 'home:data' a %}'>{% endfor %}
+                {% for a in j|slice:"1" %}{{a}}{% endfor %} <strong>Last date: {% for a in j|slice:"1:2" %}{{a}}{% endfor %}</strong>
+                
+                {% else %}
+            
+                {% for a in j|slice:"1:2" %}<a href='{% url 'home:data' a %}'>{% endfor %}    
+                {% for a in j|slice:"1" %}{{a}}{% endfor %}
+
+                {% endif %}
+                </a></li></ul>
+                {% endfor %}
+                
+        </div>
+        </div>
+        
+    </div>
+    </div>
+    {%endblock%}
+</body>
+</html>

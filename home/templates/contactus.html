@@ -1,0 +1,84 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+<html>
+<head>
+    <meta content="width=device-width,initial-scale=1">
+    {% block a %}ContactUs{% endblock %}
+    {% block link %}
+    <style>
+    .background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+
+  display: block;
+  background-image: url(/static/images/contact.jpg);
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -o-filter: blur(4px);
+  -ms-filter: blur(4px);
+  filter: blur(4px);
+}
+    .container-fluid{
+        position: absolute;
+        top: 20%;
+        left:10%;
+        width:80%;
+    }
+    #left{
+        background: linear-gradient(90deg,lightblue,transparent);
+        padding: 15px;
+    }
+    #left h1{
+        text-align: center;
+        color:orange;
+    }
+    #heading{
+        text-align: center;
+        color: orange;
+        font-size: 30px; 
+    }
+    #heading::after{
+        content: '';
+        background: orange;
+        display: block;
+        height:3px;
+        width:170px;
+        margin: 20px auto 5px;
+    }
+    #send{
+        width:100%;
+    }
+    </style>
+    {%endblock%}
+</head>
+<body>
+{% block b %}
+    <div class="background-image"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col" id="left">
+                <h1>Contact Us</h1>
+                <p class="m-4"><i class="fa fa-envelope fa-lg"></i> reticentrahul@gmail.com</p>
+                <p class="m-4"><i class="fa fa-tty fa-lg"></i> +91-7982161466</p>
+                <p class="m-4"><i class="fa fa-map-marker fa-lg"></i> H-no. 62 Haiderpur Delhi-110088</p>
+            </div>
+            <div class="col" style="background: linear-gradient(180deg,transparent,lightblue);">
+                <h1 id="heading">Fill in Details</h1>
+                <form method="POST" action="{% url 'home:contactus' %}">
+                    {% csrf_token %}
+                    <input class="m-1" type="text" name="name" placeholder="Name" style="padding:5px;" required />
+                    <input class="m-1" type="email" name="email" placeholder="Email" style="width:100%;padding:5px;" required/>
+                    <textarea class="m-1" name="message" rows="3" placeholder="message..." style="width:100%;padding:5px;" required></textarea><br/>
+                    <button class="btn btn-primary m-1" id="send"><i class="fa fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

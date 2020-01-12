@@ -1,0 +1,237 @@
+
+.col-sm-4{
+	min-width: 320px;
+	margin-top:35px;
+	margin-bottom: 35px;
+}
+.card{
+	color:white;
+}
+.card-header{
+	padding:5px;font-size:25px;background:#ab183d;
+	text-align: center;
+	font-weight: bold;
+}
+.card-body{
+	color:black;background:whitesmoke;padding: 2px;
+}
+#section{
+	position: relative;
+	margin-top:47px;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg,#3f51b5,#00bcd4);
+	animation: animate 20s linear infinite;
+}
+@keyframes animate{
+	0%{
+			filter: hue-rotate(0deg);
+	}
+	50%{
+			filter: hue-rotate(360deg);
+	}
+	100%{
+			filter: hue-rotate(0deg);
+	}
+}
+#section::before{
+	z-index:-1;
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	border-top: 100vh solid transparent;
+	border-left: 100vh solid #fff;
+	opacity: 0.1;
+}
+#section::after{
+	z-index:-1;
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	border-top: 100vh solid transparent;
+	border-right: 100vh solid #fff;
+	opacity: 0.1;
+}
+/* for category filter */
+#selectionhead{
+	text-align:center;
+	color:yellowgreen;
+	text-transform: capitalize;
+	font-size:35px;
+}
+#selectionhead::after{
+	content: '';
+	background: yellowgreen;
+	display: block;
+	height: 3px;
+	width:250px;
+	margin: 20px auto 10px;
+}
+#category{
+	background: whitesmoke;
+	overflow-x: visible ;
+	overflow-y: scroll;
+	padding: 15px;
+}
+#category a{
+	padding: 10px;
+	color:darkslategrey;
+	font-family: 'Times New Roman', Times, serif;
+	font-size:15px;
+	text-decoration: none; 
+}
+#category a:hover{
+	color: yellowgreen;
+	font-size: 20px;	
+}
+
+#myBtnContainer{
+	background: whitesmoke;
+	width: 100%;
+}
+
+.filterbtn {
+	float: left;
+	background-color: lightgreen;
+	color: black;
+	text-align: center;
+	display: none;
+	padding: 10px;
+	min-width: 170px;
+	overflow: hidden;
+	border:none;
+  }
+  
+  .show {
+	display: block;
+  }
+  
+  #container {
+	margin-top: 10px;
+	overflow: hidden;
+	width: 100%;
+  }
+  
+  /* Style the buttons */
+  #btn {
+	border: none;
+	outline: none;
+	padding: 10px;
+	background-color: whitesmoke;
+	cursor: pointer;
+  }
+  
+  #btn:hover {
+	background-color: #ddd;
+  }	
+  
+  #btn.active {
+	background-color: #666;
+	color: white;
+	}
+  #testimonials{
+	  text-align:center;
+	  color:orange;
+	  text-transform: capitalize;
+  }
+  #testimonials::after{
+	  content: '';
+	  background: orange;
+	  display: block;
+	  height:3px;
+	  width:170px;
+	  margin: 20px auto 5px;
+  }
+  .swiper-container {
+	width: 100%;
+	padding-top: 100px;
+	padding-bottom: 50px;
+  }
+  .swiper-slide {
+	background: linear-gradient(90deg,#ccc,transparent);
+	background-position: center;
+	background-size: cover;
+	padding: 80px  40px 40px;
+	width: 400px;
+	height: 250px;
+  }
+  .swiper-slide:hover{
+	background: #ff0057;
+  }
+  .swiper-slide:before{
+	content:'';
+	position: absolute;
+	top: 5px;
+	right: 40px;
+	width: 80px;
+	height:80px;
+	background: url('/static/images/rightquote.png');
+	background-size: cover;
+	opacity: 0.05;
+	pointer-events: none;
+  }
+  .swiper-slide:hover:before{
+	transform:translateY(-45px);
+	opacity: 1;
+  }
+  .swiper-slide:after{
+	content:'';
+	position: absolute;
+	bottom: 5px;
+	left: 40px;
+	width: 80px;
+	height:80px;
+	background: url('/static/images/rightquote.png');
+	background-size: cover;
+	opacity: 0.05;
+	pointer-events: none;
+	transform: rotate(180deg) translateY(0px);
+  }
+  .swiper-slide:hover:after{
+	transform: rotate(180deg) translateY(-45px);
+	opacity: 1;
+  }
+
+  .swiper-slide:hover p,
+  .swiper-slide:hover h4,
+  .swiper-slide:hover span{
+	color: #fff;
+  }
+  .swiper-slide .imgBx{
+	position: absolute;
+	top: -60px;
+	left: 50%;
+	transform : translateX(-50%);
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	border:5px solid white;
+	overflow: hidden;
+  }
+  .swiper-slide p{
+	transition: 0.05s;
+  }
+  .details{
+	text-align: center;
+  }
+  .swiper-slide h4{
+	margin: 20px 0 0;
+	padding: 0;
+	transition: 0.05s;
+	font-size: 16px;
+	color: #ff0057;
+	font-weight: 700px;
+	line-height: 20px;
+	text-transform: uppercase;
+  }
+  .swiper-slide h4 span{
+	font-weight: 600px;
+	font-size: 14px;
+	color: #c5c5c5;
+	transition: 0.05s;
+  }
+#footer a img{
+	padding:25px;
+}

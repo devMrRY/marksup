@@ -1,0 +1,202 @@
+{%extends 'header.html'%}
+{%load staticfiles%}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{%block a%}MarksUp{%endblock%}</title>
+    {%block link%}
+    <link rel="stylesheet" type='text/css' href="{%static 'css/practice.css'%}"></link>
+    {%endblock%}
+    {%block s%}
+    <script src="{%static 'js/practice.js'%}"></script>
+    {%endblock%}
+</head>
+<body>
+{%block b%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3" id="sidecont">
+                <p>PRACTICE</p>
+                <div id="topcontainer">
+                    <div class="row"><div class="col" style="padding:10px;">
+                        <a href="{% url 'home:practice' 'Model Test Paper' category_name %}" {% if 'previous' in practice_type %} {% with color='darkgrey' %} style="color:{{color}};" {% endwith %}{% endif %} style="font-size: medium;">Model Test Paper</a>
+                    </div></div>
+                    <div class="row"><div class="col" style="padding:10px;font-size: large;">
+                        <a href="{% url 'home:practice' 'Previous year Papers' category_name %}" {% if 'model' in practice_type %} {% with color='darkgrey' %} style="color:{{color}};" {% endwith %}{% endif %} style="font-size: medium;">Previous year Papers</a>
+                    </div></div>
+                </div>
+                
+                <p>EXAM CATEGORY</p>
+                <div class="panel-group" id="accordion">
+                    <div class="panel-heading" id="myInput" data-toggle="collapse" data-parent='#accordion' href='#collapse1'>
+                        <h6 style="padding:10px;">{{category_name}}
+                        <i class="dropdown-toggle"></i>
+                        </h6>
+                    </div>
+                    
+                    <span class="caret"></span>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        {% for i in context %}
+                        <a class="dropdown-item" style="padding-left:15px;" href="{% url 'home:practice' practice_type i %}">{{i}}</a>
+                        {% endfor %}
+                    </div>
+                    </div>
+                <div class='dropdown'>
+                    <p data-toggle="dropdown">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                        Filter by{% if 'previous' in practice_type %} Exam{%endif %}
+                        {% if 'model' in practice_type %}Subject{%endif%}
+                        <i class="dropdown-toggle" style="float:right;"></i>
+                    </p>
+
+                    {% if 'previous' in practice_type %}
+                    <div class="dropdown-menu" id="filter-menu">
+                        <div class="dropdown-item">
+                            <label class="n-radio-label">
+                                <input id="0" type="radio" value="0"{% if filterby == None %} checked {%endif%}name="question0">
+                                <a href="{% url 'home:practice' practice_type category_name %}">
+                                <span for="0">All</span></a>
+                            </label>
+                        </div>
+                    {% for i in context %}
+                    {% if i|upper == category_name|upper %}
+                    {% for j in i.subcategory_set.all %}
+                        <div class="dropdown-item">
+                            <label class="n-radio-label">
+                                <input id="0" type="radio" value="0" {%if filterby == j.jobbycategory %}checked{%endif%} name="question0">
+                                <a href="{% url 'home:filterby' practice_type category_name j.jobbycategory %}">
+                                <span for="0">{{j.jobbycategory}}</span></a>
+                            </label>
+                        </div>
+                    {% endfor %}
+                    {%endif%}
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if 'model' in practice_type %}
+                    <div class="dropdown-menu" id="filter-menu">
+                        <div class="dropdown-item">
+                            <label class="n-radio-label">
+                                <input id="0" type="radio" value="0"{% if filterby == None %} checked {%endif%} name="question0">
+                                <a href="{% url 'home:practice' practice_type category_name %}">
+                                <span for="0">All</span>
+                            </a>
+                            </label>
+                        </div>
+                    {% for i in context %}
+                    {% if i|upper == category_name|upper %}
+                    {% for j in i.subjectcategory_set.all %}
+                        <div class="dropdown-item">
+                            <label class="n-radio-label">
+                                <input id="0" type="radio" value="0" {%if filterby == j.subject %}checked{%endif%} name="question0">
+                                <a href="{% url 'home:filterby' practice_type category_name j.subject %}">
+                                <span>{{j.subject}}</span></a>
+                            </label>
+                        </div>
+                    {% endfor %}
+                    {%endif%}
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row m-1" id="heading">
+                    <div class="col">
+                    <h6>
+                        {{category_name|upper}} {{filterby|title}}
+                    </h6>
+                </div>
+                </div>
+                <hr/>
+                
+                {% if 'previous' in practice_type %}
+                <div class="row " style="margin-left:0px;"> 
+                    {% for i in context %}
+                    {% if i|lower == category_name|lower %}
+                    {% for j in i.subcategory_set.all %}
+                    {% if filterby == None %}               <!--contditions for no filter or all-->
+                    {% for p in j.prevpaper_set.all %}
+
+                    <hr/>{{p.paper_year}}
+                    <div class="col m-1" id="paperblock">
+                        {%csrf_token%}
+                        <div style="text-align:center;color:white;">
+                        <i class="fa fa-file fa-3x"></i><br/><br/>
+                        {{p.paper_title}} {{p.paper_year}}<br/>
+                        {{p.total_question}} Ques/{{p.paper_time}} Mins<br/><br/>
+                        <a href={% url 'home:paper' practice_type category_name j.jobbycategory p.paper_title p.paper_year%}><button class="btn btn-success">Start</button></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if j.jobbycategory|lower == filterby|lower %}
+                    {% for p in j.prevpaper_set.all %}
+
+                    <hr/>{{p.paper_year}}
+                    <div class="col m-1" id="paperblock">
+                        {%csrf_token%}
+                        <div style="text-align:center;color:white;">
+                        <i class="fa fa-file fa-3x"></i><br/><br/>
+                        {{p.paper_title}} {{p.paper_year}}<br/>
+                        {{p.total_question}} Ques/{{p.paper_time}} Mins<br/><br/>
+                        <a href={% url 'home:paper' practice_type category_name j.jobbycategory p.paper_title p.paper_year%}><button class="btn btn-success">Start</button></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="row " style="margin-left:0px;"> 
+                    {% for i in context %}
+                    {% if i|lower == category_name|lower %}
+                    {% for j in i.subjectcategory_set.all %}
+                    {% if filterby == None %}               <!--contditions for no filter or all-->
+                    {% for p in j.quiz_set.all %}
+
+                    <hr/>{{p.quiz_created}}
+                    <div class="col m-1" id="paperblock">
+                        {%csrf_token%}
+                        <div style="text-align:center;color:white;">
+                        <i class="fa fa-file fa-3x"></i><br/><br/>
+                        {{p.quiz_title}} {{p.quiz_created}}<br/>
+                        {{p.total_question}} Ques/{{p.quiz_time}} Mins<br/><br/>
+                        <a href={% url 'home:paper' practice_type category_name j.subject p.quiz_title p.quiz_time %}><button class="btn btn-success">Start</button></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if j.subject|lower == filterby|lower %}
+                    {% for p in j.quiz_set.all %}
+
+                    <hr/>{{p.quiz_created}}
+                    <div class="col m-1" id="paperblock">
+                        {%csrf_token%}
+                        <div style="text-align:center;color:white;">
+                        <i class="fa fa-file fa-3x"></i><br/><br/>
+                        {{p.quiz_title}} {{p.quiz_created}}<br/>
+                        {{p.total_question}} Ques/{{p.quiz_time}} Mins<br/><br/>
+                        <a href={% url 'home:paper' practice_type category_name j.subject p.quiz_title p.quiz_time %}><button class="btn btn-success">Start</button></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{%endblock%}
+</body>
+</html>

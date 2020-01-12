@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta name='viewport' content="width=device-width, initial-scale=1" charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{%  static 'logo.png' %}"><!--favicon-->
+    {% block link %}{% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    {%block s%}{%endblock%}
+    <title>{%block a%}{%endblock%}</title>
+
+</head>
+<body>
+<div id="main">
+<nav class="navbar fixed-top">
+    <!--navbar header with button and image-->
+    <div class="form-inline">
+        <button class="openbtn" onclick="toggleNav()">&#9776;</button> 
+        
+        <a class="navbar-brand" href="{% url 'home:menu' %}" style="color:black;">
+            <img class="image-responsive2" src="{%static 'images/logo.png'%}" alt="Home"/> MarksUp
+        </a>
+    <!--navbar header end-->
+
+    <!--navbar item-->
+    <div class="nav-item dropdown ">
+        <a class="nav-item" id="navbardrop" data-toggle="dropdown" style="color:yellowgreen;">
+            <i class="fa fa-th-list fa-lg" aria-hidden="true"></i> alljobs<span class="caret"></span>
+        </a>
+        <div class="dropdown-menu" id="dropdown-menu">
+            {% for category,value in head.items %}
+            <div class="dropdown-submenu dropdown-item" >
+                <a class="test dropdown-item" tabindex="-1">{{category}}<i class="fa fa-caret-right" style="float:right;"></i><span class="caret"></span></a>
+                <div class="dropdown-menu " id="dropdown-menu">
+                {% for sub,job in value.items %}
+                {% if sub != 'none' %}
+                <div class="dropdown-submenu dropdown-item">
+                    <a class="test dropdown-item" tabindex="-1">{{sub}}<i class="fa fa-caret-right" style="float:right;"></i><span class="caret"></span></a>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        {% for j in job %}
+                        <a class="dropdown-item" tabindex="-1" href="{% url 'home:data' j %}">{{j}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                    <div class="dropdown-submenu ">
+                        {% for j in job %}
+                        <a class="dropdown-item" tabindex="-1" href="{% url 'home:data' j %}">{{j}}<span class="caret"></span></a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            {% endfor %}            
+        </div>
+    </div>
+    <div class="nav-item dropdown p-2">
+        <a class="nav-item" href="#" id="navbardrop" data-toggle="dropdown" style="color:yellowgreen;">
+            <i class="fa fa-edit fa-lg" aria-hidden="true"></i> Practice
+        </a>
+        <div class="dropdown-menu text-left">
+            <a class="dropdown-item" href={%url 'home:practice' 'previous year papers' 'SSC' 'all' %}><i class="fa fa-th-large"></i> Prev. year paper</a>
+            <a class="dropdown-item" href={%url 'home:practice' 'model test paper' 'SSC' 'all' %}><i class="fa fa-th-large"></i> model test paper</a>
+        </div>
+        
+    </div>
+    </div><!--navbar item end-->
+
+    <!--search bar -->     
+    <form class="form-inline" method="POST" action="{% url 'home:search' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control search-txt" name="srh" value="" placeholder="Search your job">
+            <span class="input-group-btn">
+            <button type="submit" class="btn btn-sm search-btn">
+                <span class="fas fa-search"></span>
+            </button>
+            </span>
+        </div>
+    </form><!-- end search bar -->
+
+    <!--dropdown menu -->
+    <div class="nav-item dropdown" style="float:right;">
+            {% if user.is_authenticated %}
+        <a class="nav-item" href="#" id="navbardrop" data-toggle="dropdown">
+            <img class="rounded-circle account-img" src="{{user.profile.image.url}}" style="width:30px;">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right text-left">
+            <a class="dropdown-item disabled" style="background:lightskyblue;">welcome {{user.username}}</a>
+            <a class="dropdown-item" href="{% url 'home:profile' %}">
+                Profile <i class="fa fa-user"></i>
+            </a>
+            <a class="dropdown-item" href="{% url 'home:logout' %}?next={{ request.path | urlencode }}">
+                Logout <i class="fa fa-power-off"></i>
+            </a>
+            {% else %}
+            <a class="nav-item" href="#" id="navbardrop" data-toggle="dropdown">
+                Signin/SignUp
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right text-left">
+            <a class="dropdown-item" onclick="document.getElementById('id01').style.display='block'" style="cursor: pointer;">
+                Signin <i class="fa fa-sign-in"></i>
+            </a>
+            <a class="dropdown-item" onclick="document.getElementById('id02').style.display='block'" style="cursor: pointer;">
+                SignUp <i class="fa fa-sign-up"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div><!--end dropdown-->    
+
+</nav>
+
+<div id="id01" class="modal">
+    
+  <form class="modal-content animate" id="id01" method="POST">
+    {% csrf_token %}
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <div class="imgcontainer">
+      <img class="rounded-circle account-img" src={% static 'images/user.png'%}>
+    </div>
+
+    <div class="container">
+      <input type="text" placeholder="Enter Username" name="user" required>
+      <input type="password" placeholder="Enter Password" name="pas" required>
+      
+      <label>
+        <span class="psw"><a href="#">Forgot password?</a></span>
+      </label>
+
+      <input class='formbtn' type="submit" name="act" value="signin"/>
+    </div>
+
+    <a onclick="document.getElementById('id01').style.display='none';document.getElementById('id02').style.display='block';" style="cursor: pointer;">
+    <div class="container text-center" style="background-color:#f1f1f1">
+        Not a User? SignUp
+    </div>
+    </a>
+  </form>
+</div>
+
+<div id="id02" class="modal">
+    
+    <form class="modal-content animate" id="id02" method="POST">
+      {% csrf_token %}
+      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <div class="imgcontainer">
+            <img class="rounded-circle account-img" src={% static 'images/user.png'%}>
+      </div>
+  
+      <div class="container" >
+        {{head.form.as_p}}
+        <input class='formbtn' type="submit" name="at" value="signup">
+      </div>
+  
+      <a onclick="document.getElementById('id02').style.display='none';document.getElementById('id01').style.display='block';" style="cursor: pointer;">
+      <div class="container text-center" style="background-color:#f1f1f1">
+        Already registered Signin
+      </div>
+      </a>
+    </form>
+  </div>
+
+
+<div id="mySidebar" class="sidebar">
+    <a href="{% url 'home:menu' %}"><i class="fa fa-home"></i> Home</a>
+    <a href="{% url 'home:aboutus' %}"><i class="fa fa-building"></i> About Us</a>
+    <a href="{% url 'home:contactus' %}"><i class="fa fa-tty"></i> ContactUs</a>
+</div>
+        
+{%block b%}
+{%endblock%}
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-circle-up fa-2x" aria-hidden="true"></i>
+    </button>
+</div>
+</body>
+</html>

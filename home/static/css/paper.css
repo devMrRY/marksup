@@ -1,0 +1,53 @@
+#sidecolumn{
+    height:100%;
+    border: #ccc solid;
+    
+}
+#quesnav{
+    position: fixed;
+    right: 0;
+    height: 100%;
+    border:#ccc solid;
+    border-width: 0.1rem;
+
+}
+#head{
+    background: whitesmoke;font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 1rem;
+}
+.panel-group:hover{
+    cursor: pointer;
+}
+.circle {
+    width: 35px;height: 35px;border-radius: 50%;font-size: 15px;
+    color: white;line-height: 35px;text-align: center;background:#ccc;
+    
+  }
+
+.btn-success{
+    width: 100%;margin-top:15px;margin-bottom: 15px; 
+}
+.panel-heading h6{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#innernavbar {    
+    background-color: #ab183d;
+    color:white;
+    font-size: 20px;
+    font-family: Verdana;
+    min-height:45px;
+    padding: 10px;
+ }
+
+ label {display: block;padding:2px; position: relative; padding-left: 35px; margin-top: -9.5px;}
+ label input {display: none;}
+ label span {border: 1px solid #ccc; width: 30px; height: 30px; 
+    position: absolute; overflow: hidden; line-height: 2; text-align: center; 
+    border-radius: 50%; font-size: 10pt; left: 0; top: 10%; }
+ input:checked + span {background: yellowgreen; border-color: yellowgreen;}
+ label:hover{
+    cursor: pointer;
+ } 
+ body, html, .main {
+    height: 100%;
+  }

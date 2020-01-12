@@ -1,0 +1,33 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+<html>
+<head>
+    <meta content="width=device-width,initial-scale=1">
+    <title>{% block a %}MarksUp{% endblock %}</title>
+    {% block link %}
+    <style>
+    </style>
+    {% endblock%}
+</head>
+<body>
+{% block b %}
+    <div class="container-fluid" style="margin-top:55px;">
+        <div class="row">
+            <div class="col">
+                <div align='center' style="border:0.1px #ccc solid;">
+                <img src="{% static 'images/trophy.jpg' %}" style="height:150px;">
+                <h3>Report Card</h3><br/>
+                <h4 style="color:lightcoral;">{{correct}}/{{total_ques}}</h4>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <h4 style="color:yellowgreen;">Total Ques : {{total_ques}}</h4>
+                <input type="button" class="btn" value="correct ({{correct}})" style="background:lightgreen;color: white;"/>
+                <input type="button" class="btn" value="wrong ({{wrong}})" style="background:red;color: white;"/>
+                <input type="button" class="btn" value="unattempted ({{unattempted}})" style="background:#ccc;color: white;"/>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

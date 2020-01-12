@@ -1,0 +1,187 @@
+{%extends 'header.html'%} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{%block a%}MarksUp{%endblock%}</title>
+    {%block link%}
+    <style>
+      .container {
+        margin-top: 50px;
+        float: left;
+      }
+
+      .col {
+        border: black solid;
+        border-width: 0.1px;
+      }
+      .col-sm-3 {
+        border: black solid;
+        border-width: 0.1px;
+        color: red;
+      }
+
+      ul {
+        text-align: left;
+      }
+
+      p {
+        font-weight: bold;
+        color: darkviolet;
+        margin-bottom: 0;
+        text-align: center;
+      }
+
+      .table-responsive {
+        margin: 0;
+        padding: 0;
+      }
+
+      th {
+        text-align: center;
+      }
+
+      #linkname {
+        color: red;
+        font-weight: 400;
+      }
+    </style>
+    {% endblock%}
+  </head>
+  <body>
+    {%block b%}
+    <div class="container">
+      <div style="width:100%;">
+        <div class="row">
+          <div class="col-sm-3">Name of Post :</div>
+          <div class="col font-weight-bold">{{obj.jobbycategory}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">Post Date :</div>
+          <div class="col font-weight-bold">
+            {%for i in obj.tarik_set.all%} {% if i.allheading == "Apply date"%}
+            {{i.alldates}} {%endif%} {%endfor%}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">Post UpDate :</div>
+          <div class="col font-weight-bold">
+            {%for i in obj.tarik_set.all%} {% if i.allheading == "Post Update"%}
+            {{i.alldates}} {%endif%} {%endfor%}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">Short Information:</div>
+          <div class="col ">{{obj.jobdescription}}</div>
+        </div>
+      </div>
+      <div style="width:100%;">
+        <div class="row">
+          <div class="col text-center font-weight-bold">
+            <p>
+              {{ obj.jobbycategory }}<br />
+              Short Details Of Notification<br /><a href="{% url 'home:menu' %}"
+                >www.MarksUp.co</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p>Important Dates</p>
+            {% for i in obj.tarik_set.all %}    
+            <ul>
+              <li>
+                <strong>{{i.allheading}}</strong> :
+                {% if i.allheading|lower == 'last date' %}
+                <strong style="color:red;">
+                  {{i.alldates}}
+                </strong>
+                {% else %} {{i.alldates}}{% endif %}
+              </li>
+            </ul>
+            {% endfor %}
+          </div>
+
+          <div class="col">
+            <p>Application Fees</p>
+            {% for i in obj.appfees_set.all %}
+            <ul>
+              <li><strong>{{i.category}}</strong> : {{i.fees}}</li>
+            </ul>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col"><p>Vacancy Details Total Post</p></div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div
+              class="table-responsive table-bordered table-hover table-condensed"
+            >
+              <table class="table">
+                <thead>
+                  <tr>
+                    {% for o in obj.vacancyheader_set.all %}
+                    <th>{{o.header}}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for o in obj.vacancydetail_set.all %}
+                  <tr>
+                    <td>{{o.department}}</td>
+                    <td>{{o.post}}</td>
+                    <td>{{o.gen}}</td>
+                    <td>{{o.obc}}</td>
+                    <td>{{o.sc}}</td>
+                    <td>{{o.st}}</td>
+                    <td>{{o.Total}}</td>
+                    <td>{{o.eligibility}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="row ">
+          <div class="col">
+            <p>
+              Interested Candidates Can Read Full Notification Before Apply
+              Online
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p>Some Useful Links</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p>Link Name</p>
+            {% for l in obj.links_set.all %}
+            <div class="row text-center" id="linkname">
+              <div class="col">{{l.link_type}}</div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="col">
+            <p>Links</p>
+            {% for l in obj.links_set.all %}
+            <div class="row text-center">
+              <div class="col "><a href="{{l.link}}">click here</a></div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {%endblock%}
+  </body>
+</html>
